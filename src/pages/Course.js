@@ -83,7 +83,7 @@ const Course = () => {
                   marginRight: "10px",
                 }}
               />
-              <label>{`${course.name} - ₹${course.amount}`}</label>
+              <h5>{`${course.name} - ₹${course.amount}`}</h5>
             </li>
           ))}
         </ul>
