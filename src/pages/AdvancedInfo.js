@@ -1,52 +1,61 @@
 import { useFormik } from "formik";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import "../styles/AdvancedInfo.css";
 
 const AdvancedInfo = () => {
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues: {
-        address: "",
-        country: "",
-        state: "",
-        pinCode: "",
-        conform: "",
-        date: "",
-        time: "",
-      },
-      validationSchema: Yup.object({
-        address: Yup.string()
-          .min(2, "Too Short!")
-          .max(50, "Too Long!")
-          .required("* Please enter your address"),
-        country: Yup.string()
-          .min(2, "Too Short!")
-          .max(50, "Too Long!")
-          .required("Please enter your country"),
-        state: Yup.string()
-          .min(2, "Too Short!")
-          .max(20, "Too Long!")
-          .required("Please enter your State"),
-        pinCode: Yup.string()
-          .required()
-          .matches(/^[0-9]+$/, "Must be only digits")
-          .min(6, "Must be exactly 6 digits")
-          .max(6, "Must be exactly 6 digits"),
-        date: Yup.date()
-          .min(new Date(), "Date is invalid")
-          .required("Enter valid date"),
-        time: Yup.string().required("Please enter time"),
-      }),
-      onSubmit: (values, action) => {
-        console.log(values);
-        action.resetForm();
-      },
-    });
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    dirty,
+    isValid,
+  } = useFormik({
+    initialValues: {
+      address: "",
+      country: "",
+      state: "",
+      pinCode: "",
+      conform: "",
+      date: "",
+      time: "",
+    },
+    validationSchema: Yup.object({
+      address: Yup.string()
+        .min(2, "Too Short!")
+        .max(50, "Too Long!")
+        .required("* Please enter your address"),
+      country: Yup.string()
+        .min(2, "Too Short!")
+        .max(50, "Too Long!")
+        .required("Please enter your country"),
+      state: Yup.string()
+        .min(2, "Too Short!")
+        .max(20, "Too Long!")
+        .required("Please enter your State"),
+      pinCode: Yup.string()
+        .required()
+        .matches(/^[0-9]+$/, "Must be only digits")
+        .min(6, "Must be exactly 6 digits")
+        .max(6, "Must be exactly 6 digits"),
+      date: Yup.date()
+        .min(new Date(), "Date is invalid")
+        .required("Enter valid date"),
+      time: Yup.string().required("Please enter time"),
+    }),
+    onSubmit: (values, action) => {
+      console.log(values);
+      action.resetForm();
+    },
+  });
+  const navigate = useNavigate();
   return (
-    <>
+    <div className="mainAdvanced">
       <h1>Advanced Info</h1>
-
       <div className="form-group">
         <label htmlFor="exampleInputFName">Address </label>
         <input
@@ -64,6 +73,7 @@ const AdvancedInfo = () => {
           <p style={{ color: "red" }}>{errors.address}</p>
         ) : null}
       </div>
+      <br />
       <div className="form-group">
         <label htmlFor="exampleInputEmail1">Country</label>
         <input
@@ -81,6 +91,7 @@ const AdvancedInfo = () => {
           <p style={{ color: "red" }}>{errors.country}</p>
         ) : null}
       </div>
+      <br />
       <div className="form-group">
         <label htmlFor="exampleInputLName">State</label>
         <input
@@ -98,7 +109,7 @@ const AdvancedInfo = () => {
           <p style={{ color: "red" }}>{errors.state}</p>
         ) : null}
       </div>
-
+      <br />
       <div className="form-group">
         <label htmlFor="exampleInputPhoneNumber">Pin Code</label>
         <input
@@ -115,12 +126,12 @@ const AdvancedInfo = () => {
           <p style={{ color: "red" }}>{errors.pinCode}</p>
         ) : null}
       </div>
-
+      <br />
       <div className="form-group">
         <input type="checkbox" id="vehicle1" name="conform" />
         <label htmlFor="vehicle1"> Recieve Emails ?</label>
       </div>
-
+      <br />
       <div className="form-group">
         <label htmlFor="exampleFormControlFile1">Profile image</label>
         <input
@@ -130,6 +141,7 @@ const AdvancedInfo = () => {
           accept="image/x-png,image/gif,image/jpeg"
         />
       </div>
+      <br />
       <div className="form-group">
         <label htmlFor="start">Date for call: &nbsp;</label>
         <input
@@ -144,7 +156,7 @@ const AdvancedInfo = () => {
           <p style={{ color: "red" }}>{errors.date}</p>
         ) : null}
       </div>
-
+      <br />
       <div className="form-group">
         <label htmlFor="appt">Time for call: &nbsp;</label>
         <input
@@ -159,14 +171,19 @@ const AdvancedInfo = () => {
           <p style={{ color: "red" }}>{errors.time}</p>
         ) : null}
       </div>
-
-      <Link to="/">
-        <button className="btn btn-primary"> Previous</button>
-      </Link>
-      <Link to="/courses">
-        <button className="btn btn-primary">next</button>
-      </Link>
-    </>
+      <br />
+      
+        <button className="btn btn-outline-primary" onClick={() => navigate("/")}> Previous </button>
+      
+      &nbsp;
+      <button
+        className="btn btn-primary"
+        disabled={!(isValid && dirty)}
+        onClick={() => navigate("/courses")}
+      >
+        Next{" "}
+      </button>
+    </div>
   );
 };
 

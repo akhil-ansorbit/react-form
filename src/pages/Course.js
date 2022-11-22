@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Course = () => {
   const courseList = [
@@ -58,6 +58,8 @@ const Course = () => {
     },
     [courses]
   );
+    const navigate = useNavigate();
+    
 
   return (
     <>
@@ -90,10 +92,8 @@ const Course = () => {
         <h1>Price (Rs) : {totalPrice}</h1>
         <h2>Selected Courses : {selectedCourses.length}</h2>
       </div>
-      <Link to="/advancedInfo">
-        <button className="btn btn-primary"> Previous </button> &nbsp;
-      </Link>
-
+        <button className="btn btn-outline-primary" onClick={() => navigate("/advancedInfo")}> Previous </button>
+      &nbsp;
       <button className="btn btn-primary">Join</button>
     </>
   );
