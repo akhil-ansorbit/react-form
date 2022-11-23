@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import React from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import "../styles/BasicInfo.css";
 const BasicInfo = () => {
@@ -43,20 +43,19 @@ const BasicInfo = () => {
       date: Yup.date().max(new Date(), "Date is invalid").required(),
       // age: Yup.string().required("A radio option is required"),
     }),
-    onSubmit: (values, action) => {
-      console.log(values);
-      // action.resetForm();
-    },
+    onSubmit: (values, action) => {},
   });
 
-  // console.log(dirty, isValid);
   const navigate = useNavigate();
-  console.log(values);
+  const onSubmit = () => {
+    localStorage.setItem("user", JSON.stringify(values));
+    navigate("/advancedInfo");
+  };
   return (
     <div className="mainBasic">
       <h1 className="basicText">Basic Info</h1>
       <div className="basicForm">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="exampleInputFName">First Name</label>
             <input
@@ -159,7 +158,7 @@ const BasicInfo = () => {
             disabled={!(isValid & dirty)}
             type="submit"
             className="btn btn-primary"
-            onClick={() => navigate("/advancedInfo")}
+            onClick={() => onSubmit()}
           >
             Next
           </button>

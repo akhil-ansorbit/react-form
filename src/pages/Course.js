@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Course = () => {
   const courseList = [
@@ -58,9 +58,14 @@ const Course = () => {
     },
     [courses]
   );
-    const navigate = useNavigate();
-    
+  const navigate = useNavigate();
+  const preData = JSON.parse(localStorage.getItem("user"));
+  const finalData = {
+    ...preData,
+    selectedCourses,
+  };
 
+  console.log(finalData);
   return (
     <>
       <h1>Courses</h1>
@@ -92,9 +97,22 @@ const Course = () => {
         <h1>Price (Rs) : {totalPrice}</h1>
         <h2>Selected Courses : {selectedCourses.length}</h2>
       </div>
-        <button className="btn btn-outline-primary" onClick={() => navigate("/advancedInfo")}> Previous </button>
+      <button
+        className="btn btn-outline-primary"
+        onClick={() => navigate("/advancedInfo")}
+      >
+        Previous
+      </button>
       &nbsp;
-      <button className="btn btn-primary">Join</button>
+      <button
+        className="btn btn-primary"
+        type="submit"
+        onClick={() => {
+          localStorage.setItem("user", JSON.stringify(finalData));
+        }}
+      >
+        Join
+      </button>
     </>
   );
 };
