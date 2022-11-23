@@ -21,7 +21,7 @@ const AdvancedInfo = () => {
       state: "",
       pinCode: "",
       conform: "",
-      date: "",
+      dateCall: "",
       time: "",
     },
     validationSchema: Yup.object({
@@ -42,7 +42,7 @@ const AdvancedInfo = () => {
         .matches(/^[0-9]+$/, "Must be only digits")
         .min(6, "Must be exactly 6 digits")
         .max(6, "Must be exactly 6 digits"),
-      date: Yup.date()
+      dateCall: Yup.date()
         .min(new Date(), "Date is invalid")
         .required("Enter valid date"),
       time: Yup.string().required("Please enter time"),
@@ -158,13 +158,13 @@ const AdvancedInfo = () => {
           <input
             type="date"
             id="start"
-            name="date"
-            value={values.date}
+            name="dateCall"
+            value={values.dateCall}
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          {errors.date && touched.date ? (
-            <p style={{ color: "red" }}>{errors.date}</p>
+          {errors.dateCall && touched.dateCall ? (
+            <p style={{ color: "red" }}>{errors.dateCall}</p>
           ) : null}
         </div>
         <br />

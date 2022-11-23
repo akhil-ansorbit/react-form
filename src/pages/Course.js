@@ -1,3 +1,4 @@
+import { configure } from "@testing-library/react";
 import React, { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -30,6 +31,7 @@ const Course = () => {
   ];
 
   const [courses, setCourses] = useState(courseList);
+  const [join, setjoin] = useState(false);
 
   const selectedCourses = useMemo(() => {
     return courses.filter((course) => course.isSelected);
@@ -42,7 +44,7 @@ const Course = () => {
     );
     return total;
   }, [selectedCourses]);
-
+  console.log("bhjg", selectedCourses);
   const handleChange = useCallback(
     (id) => {
       const courseList = courses.map((course) => {
@@ -60,12 +62,19 @@ const Course = () => {
   );
   const navigate = useNavigate();
   const preData = JSON.parse(localStorage.getItem("user"));
+
   const finalData = {
     ...preData,
     selectedCourses,
   };
 
-  console.log(finalData);
+  // console.log(finalData);
+  const getAllData = JSON.parse(localStorage.getItem("user"));
+  const select = selectedCourses.map((crs) => {
+    return crs.isSelected && crs.name;
+  });
+  console.log(select);
+
   return (
     <>
       <h1>Courses</h1>
@@ -109,10 +118,31 @@ const Course = () => {
         type="submit"
         onClick={() => {
           localStorage.setItem("user", JSON.stringify(finalData));
+          setjoin(true);
         }}
       >
         Join
       </button>
+      {join && (
+        <div>
+          <div>
+            <div>{` Name = ${getAllData.fName} ${getAllData.lName}`}</div>
+            <div>{`Email = ${getAllData.email} `}</div>
+            <div>{`Phone No. = ${getAllData.phone} `}</div>
+            <div>{`DOB  = ${getAllData.date} `}</div>
+            <div>{`Address  = ${getAllData.address} `}</div>
+            <div>{`Country  = ${getAllData.country} `}</div>
+            <div>{`State  = ${getAllData.state} `}</div>
+            <div>{`Pin Code  = ${getAllData.pinCode} `}</div>
+            <div>{`Date of call = ${getAllData.dateCall} `}</div>
+            <div>{`Time of call = ${getAllData.time} `}</div>
+          </div>
+          {/* {selectedCourses.map((cname)=>{
+          <div>{console.log(cname)}</div>
+        })} */}
+          <div>{`Selected courses = ${select}`}</div>
+        </div>
+      )}
     </>
   );
 };
